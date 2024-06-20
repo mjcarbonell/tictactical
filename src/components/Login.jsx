@@ -13,13 +13,13 @@ function Login({ onLogin }) {
 
     try {
       const response = await axios.post('https://tictacticalbackend.up.railway.app/api/login', { email, password });
-      // const response = await axios.post('http://localhost:3000/api/login', { email, password });
       const data = response.data;
       console.log('Response data:', data);
       if (response.status === 200) {
         localStorage.setItem('authToken', data.token); // Store the token
+        localStorage.setItem('userEmail', email); // Store the email
         console.log('Token stored in localStorage:', data.token);
-        onLogin(data.token); // Update the state in the parent component
+        onLogin(data.token, email); // Update the state in the parent component
       } else {
         alert(data.error);
       }

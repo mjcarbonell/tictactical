@@ -3,16 +3,21 @@ import { Canvas } from '@react-three/fiber';
 import { Experience } from './components/Experience';
 import Register from './components/Register';
 import Login from './components/Login';
+import Navigation from './components/Navigation';
 
 function App() {
   const [authToken, setAuthToken] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
   const [showLogin, setShowLogin] = useState(true);
+  const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
-    // Check if token exists in localStorage
+    // Check if token and email exist in localStorage
     const token = localStorage.getItem('authToken');
-    if (token) {
+    const email = localStorage.getItem('userEmail');
+    if (token && email) {
       setAuthToken(token);
+      setUserEmail(email);
       setShowLogin(false);
     }
   }, []);
@@ -21,28 +26,44 @@ function App() {
     console.log('AUTH TOKEN:', authToken);
   }, [authToken]);
 
-  const handleRegister = (token) => {
+  const handleRegister = (token, email) => {
     console.log('Register token:', token);
     setAuthToken(token);
+    setUserEmail(email);
     setShowLogin(false);
+    setShowRegister(false);
   };
 
-  const handleLogin = (token) => {
+  const handleLogin = (token, email) => {
     console.log('Login token:', token);
     setAuthToken(token);
+    setUserEmail(email);
     setShowLogin(false);
+    setShowRegister(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userEmail');
+    setAuthToken(null);
+    setUserEmail('');
+    setShowLogin(true);
   };
 
   return (
     <>
+      <Navigation
+        authToken={authToken}
+        userEmail={userEmail}
+        onLoginClick={() => { setShowLogin(true); setShowRegister(false); }}
+        onRegisterClick={() => { setShowRegister(true); setShowLogin(false); }}
+        onLogout={handleLogout}
+      />
       <Canvas shadows camera={{ position: [0, 0, 10], fov: 30 }}>
         <Experience />
       </Canvas>
-      {!authToken && (
-        showLogin ? 
-        <Login onLogin={handleLogin} /> : 
-        <Register onRegister={handleRegister} />
-      )}
+      {!authToken && showLogin && <Login onLogin={handleLogin} />}
+      {!authToken && showRegister && <Register onRegister={handleRegister} />}
     </>
   );
 }

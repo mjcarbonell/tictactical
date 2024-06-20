@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Register({ onRegister }) {
   const [email, setEmail] = useState('');
@@ -6,19 +7,25 @@ function Register({ onRegister }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    // Call your registration API
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      onRegister(data.token);
-    } else {
-      alert(data.error);
+    console.log('Register button clicked');
+    console.log('Email:', email);
+    console.log('Password:', password);
+
+    try {
+      const response = await axios.post('https://tictacticalbackend.up.railway.app/api/register', { email, password });
+      const data = response.data;
+      console.log('Response data:', data);
+      if (response.status === 201) {
+        localStorage.setItem('authToken', data.token); // Store the token
+        localStorage.setItem('userEmail', email); // Store the email
+        console.log('Token stored in localStorage:', data.token);
+        onRegister(data.token, email); // Update the state in the parent component
+      } else {
+        alert(data.error);
+      }
+    } catch (error) {
+      console.error('Error during register:', error);
+      alert(error.response ? error.response.data.error : 'An error occurred during register.');
     }
   };
 
