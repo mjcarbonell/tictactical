@@ -40,7 +40,7 @@ export const Experience = () => {
     }
   }, [active]);
   useEffect(() => {
-    console.log("hovered: ", hovered); 
+    // console.log("hovered: ", hovered); 
   }, [hovered]);
 
   return (
