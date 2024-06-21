@@ -12,7 +12,7 @@ function Navigation({ authToken, userEmail, onLoginClick, onRegisterClick, onLog
     <div className="navigation">
       {authToken ? (
         <div className="logged-in">
-          <button onClick={() => setShowDropdown(!showDropdown)}>
+          <button className="logged-in" onClick={() => setShowDropdown(!showDropdown)}>
             Logged in as: {userEmail}
           </button>
           {showDropdown && (

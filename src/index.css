@@ -79,3 +79,23 @@ body {
   border: none;
   cursor: pointer;
 }
+.logged-in button {
+  background: rgb(215 186 223 / 60%);
+  padding: 2px 5px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.4s;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+}
+.logged-out button {
+  background: rgb(215 186 223 / 60%);
+  padding: 2px 5px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.4s;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+}
