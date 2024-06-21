@@ -4,12 +4,18 @@ import { Experience } from './components/Experience';
 import Register from './components/Register';
 import Login from './components/Login';
 import Navigation from './components/Navigation';
+import { useGameStore } from "./store";
 
 function App() {
   const [authToken, setAuthToken] = useState(null);
   const [userEmail, setUserEmail] = useState('');
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
+
+  const { grade  } = useGameStore((state) => ({
+    grade: state.grade,
+  }));
+
 
   useEffect(() => {
     // Check if token and email exist in localStorage
@@ -22,10 +28,6 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log('AUTH TOKEN:', authToken);
-  }, [authToken]);
-
   const handleRegister = (token, email) => {
     console.log('Register token:', token);
     setAuthToken(token);
@@ -35,7 +37,7 @@ function App() {
   };
 
   const handleLogin = (token, email) => {
-    console.log('Login token:', token);
+    // console.log('Login token:', token);
     setAuthToken(token);
     setUserEmail(email);
     setShowLogin(false);
@@ -62,7 +64,8 @@ function App() {
       <Canvas shadows camera={{ position: [0, 0, 10], fov: 30 }}>
         <Experience />
       </Canvas>
-      {!authToken && showLogin && <Login onLogin={handleLogin} />}
+      {/* if the authToken doesn't exist and showLogin is true then we show login*/}
+      {!authToken && showLogin && <Login onLogin={handleLogin} />} 
       {!authToken && showRegister && <Register onRegister={handleRegister} />}
     </>
   );

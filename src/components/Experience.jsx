@@ -1,12 +1,4 @@
-import {
-  CameraControls,
-  Environment,
-  MeshPortalMaterial,
-  RoundedBox,
-  Text,
-  useCursor,
-  useTexture,
-} from "@react-three/drei";
+import {CameraControls,Environment,MeshPortalMaterial,RoundedBox,Text,useCursor,useTexture} from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { easing } from "maath";
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +6,13 @@ import * as THREE from "three";
 import { Cactoro } from "./Cactoro";
 import { DragonEvolved } from "./Dragon_Evolved";
 import { Tourist } from "./Tourist";
+import { useGameStore } from "../store"; 
 export const Experience = () => {
+  const { grade, gameState  } = useGameStore((state) => ({
+    grade: state.grade,
+    gameState: state.gameState,
+  }));
+
   const [active, setActive] = useState(null);
   const [hovered, setHovered] = useState(null);
   useCursor(hovered);
@@ -65,36 +63,15 @@ export const Experience = () => {
       >
         <Tourist scale={0.6} position-y={-1} hovered={hovered === "Tourist"} />
       </MonsterStage>
-      <MonsterStage
-        texture={"textures/anime_art_style_lava_world.jpg"}
-        name="Dragon"
-        color={"#df8d52"}
-        position-x={-2.5}
-        rotation-y={Math.PI / 8}
-        active={active}
-        setActive={setActive}
-        hovered={hovered}
-        setHovered={setHovered}
-      >
-        <DragonEvolved
-          scale={0.5}
-          position-y={-1}
-          hovered={hovered === "Dragon"}
-        />
-      </MonsterStage>
-      <MonsterStage
-        name="Cactoro"
-        color="#739d3c"
-        texture={"textures/anime_art_style_cactus_forest.jpg"}
-        position-x={2.5}
-        rotation-y={-Math.PI / 8}
-        active={active}
-        setActive={setActive}
-        hovered={hovered}
-        setHovered={setHovered}
-      >
+      { (gameState==="GAME") &&
+        <MonsterStage texture={"textures/anime_art_style_lava_world.jpg"} name="Dragon" color={"#df8d52"} position-x={-2.5} rotation-y={Math.PI / 8} active={active} setActive={setActive}
+        hovered={hovered} setHovered={setHovered} >
+        <DragonEvolved scale={0.5} position-y={-1} hovered={hovered === "Dragon"} />
+      </MonsterStage>}
+      { (gameState==="GAME") && 
+        <MonsterStage name="Cactoro" color="#739d3c" texture={"textures/anime_art_style_cactus_forest.jpg"} position-x={2.5}rotation-y={-Math.PI / 8} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered}>
         <Cactoro scale={0.45} position-y={-1} hovered={hovered === "Cactoro"} />
-      </MonsterStage>
+      </MonsterStage>}
     </>
   );
 };

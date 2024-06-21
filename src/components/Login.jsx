@@ -18,8 +18,8 @@ function Login({ onLogin }) {
       if (response.status === 200) {
         localStorage.setItem('authToken', data.token); // Store the token
         localStorage.setItem('userEmail', email); // Store the email
-        console.log('Token stored in localStorage:', data.token);
-        onLogin(data.token, email); // Update the state in the parent component
+        // console.log('Token stored in localStorage:', data.token);
+        onLogin(data.token, email); // mapping onLogin to handleLogin in parent App.jsx. 
       } else {
         alert(data.error);
       }

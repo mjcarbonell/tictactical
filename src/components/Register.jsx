@@ -14,11 +14,11 @@ function Register({ onRegister }) {
     try {
       const response = await axios.post('https://tictacticalbackend.up.railway.app/api/register', { email, password });
       const data = response.data;
-      console.log('Response data:', data);
+      // console.log('Response data:', data);
       if (response.status === 201) {
         localStorage.setItem('authToken', data.token); // Store the token
         localStorage.setItem('userEmail', email); // Store the email
-        console.log('Token stored in localStorage:', data.token);
+        // console.log('Token stored in localStorage:', data.token);
         onRegister(data.token, email); // Update the state in the parent component
       } else {
         alert(data.error);
