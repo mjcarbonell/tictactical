@@ -1,26 +1,28 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
-export const generateFreeRoam = () => {
-  levelFreeRoam = ["hello"];
-  return levelFreeRoam; 
+export const generateLevel = (get) => {
+  // structure [max.moohaha, dragon, cacto]
+  const players = [];
+  for(let i=0; i<3; i++){
+    players[]
+  }
+  return level; 
 };
 export const useGameStore = create(
   subscribeWithSelector((set, get) => ({
     gameState: "MENU",
     grade: ["gradeTest"], 
     setGrade: (state) => set({ grade: state }),
-    levelFreeRoam: null,
-
+    level: [],
 
     // START FREEROAM
-    startFreeRoam: () => { 
-      const levelFreeRoam = generateFreeRoam(); // level contains necessary information. level[0] is the checklist 
+    startGame: () => { 
+      const level = generateLevel(get); // level contains necessary information. level[0] is the checklist 
       set({
         gameState: "FREEROAM",
-        levelFreeRoam: levelFreeRoam,
+        level: level
       });
     },
-
   }))
 );

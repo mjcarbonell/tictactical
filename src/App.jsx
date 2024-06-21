@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Experience } from './components/Experience';
+import { Menu } from './components/Menu'
 import Register from './components/Register';
 import Login from './components/Login';
 import Navigation from './components/Navigation';
@@ -12,7 +13,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
 
-  const { grade  } = useGameStore((state) => ({
+  const { grade, setEmail  } = useGameStore((state) => ({
     grade: state.grade,
   }));
 
@@ -64,6 +65,7 @@ function App() {
       <Canvas shadows camera={{ position: [0, 0, 10], fov: 30 }}>
         <Experience />
       </Canvas>
+      <Menu />
       {/* if the authToken doesn't exist and showLogin is true then we show login*/}
       {!authToken && showLogin && <Login onLogin={handleLogin} />} 
       {!authToken && showRegister && <Register onRegister={handleRegister} />}
